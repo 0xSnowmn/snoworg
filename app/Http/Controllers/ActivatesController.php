@@ -13,7 +13,7 @@ date_default_timezone_set('Africa/Cairo');
 class ActivatesController extends Controller {
 
     public function __construct() {
-        //$this->middleware('auth:api', ['except' => ['activateRequest', 'request','login']]);
+        $this->middleware('auth:api', ['except' => ['activateRequest', 'request','login']]);
     }
 
     public function exportKey($mac,$program,$version){

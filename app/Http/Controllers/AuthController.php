@@ -135,7 +135,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         $minutes = auth('api')->factory()->getTTL() * 60;
-        $timestamp = now()->addMinute($minutes + 10 * 60);
+        $timestamp = now()->addMinute($minutes);
         $expires_at = date('M d, Y H:i A', strtotime($timestamp));
         return response()->json([
             'status' => true,

@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use Validator;
 
 class ProgramsController extends Controller {
-    //$all = Activates::where('program','=');
+    public function __construct() {
+        $this->middleware('auth:api');
+    }
     public function all(){
         return response()->json([
             "status" => true,
