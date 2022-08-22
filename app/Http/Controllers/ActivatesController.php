@@ -136,7 +136,7 @@ class ActivatesController extends Controller {
         ]);
     }
 
-    private function checkExpire($expire,$program,$version){
+    private function checkExpire($expire,$program,$version,$act){
         $from_date = Carbon::parse(date('m-d-Y', strtotime($expire))); 
         $through_date = Carbon::parse(date('m-d-Y', strtotime(Carbon::now()->format('m-d-Y'))));         
         $shift_difference = $from_date->greaterThanOrEqualTo($through_date);
@@ -149,6 +149,8 @@ class ActivatesController extends Controller {
                     "version" => $up_version,
                 ],401);
             };
+            $act->last_used = Carbon::now();
+            $act->save();
             return response()->json([
                 "status" => true,
                 "expired" => false,
@@ -190,7 +192,7 @@ class ActivatesController extends Controller {
                             "message" => "Your Activation Is Hold, Contact Owner",
                         ],402);
                     }
-                   return $this->checkExpire($user->expire,$request->program,$request->version);
+                   return $this->checkExpire($user->expire,$request->program,$request->version,$user);
                 } else {
                     return response()->json([
                         "status" => false,
